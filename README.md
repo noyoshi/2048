@@ -1,4 +1,7 @@
-### TETRIS ###
+### IDEAS? ###
+
+Tetris?
+2048?
 
 TODO
 ---
