@@ -60,3 +60,11 @@ private:
   grid[][]
 }
 
+NOTES:
+Noah uses 2 spaces when coding in C++
+Noah uses tabs to spaces (ie, spaces)
+Noah uses under_score
+Noah uses 
+foo(){
+} brackets
+just fyi :3 u can do whatevs
