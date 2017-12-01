@@ -1,0 +1,5 @@
+1. Values disappear sometimes, especially when you initially start playing.
+2. If you select a move which would cause no movement, then the player has to
+choose another move. Not implemented currently.
+3. Implement GFX drawing and animation
+4. Segfaults (sometimes? lol) when you quit. This might be a problem with my local machine, however, sometimes this happened on HW assignments, but they worked fine on the student machines. 
