@@ -1,0 +1,49 @@
+When playing 2048, for every turn, we must:
+1. Process user input (up, down, left, right)
+2. For that input, move all squares in the farthest of that direction, to that
+direction 
+  i. when moving squares, if any square contacts an edge, it stops moving 
+  ii. if any square contacts a square of equal value, they merge into one
+  sqaure of n + n value 
+  iii. if any moving square contacts any other kind of square, it stops 
+3. randomly generate a 2 square on any open space on the board 
+  i. if this is not possible, the player loses 
+4. update the highest value present on the board, as the current score (unless
+we want to do score based on the total value present on the whole board)
+
+
+How we can implement this: 
+
+gloab var? grid[4][4] which contains numbers, default can be zero, updates with the value
+of the current square in that space 
+
+functions: 
+  draw_square(x, y, val)
+    use: draws square on x,y coordinates on the grid, with value = val 
+    we would invoke this at the end of the turn, when all squares have been
+    moved 
+  update_board(direction, board) *board is only if it is not a global var 
+    use: updates the board with the move in direction 
+    this function would need to call other functions
+
+  ==== if we do not want to do update_board, we can just look through the grid
+  using update_square ===
+    update_square(direction, x, y, board)
+      use: updates the square with original position x,y by moving it in
+      direction specified. 
+      we would have to manually loop through the board, making sure  to loop
+      through it in the correct manner (when moving top, loop through row by
+      row, top row first, moving bottom, row by row starting bottom, right,
+      column by column moving farthers right first, moving left, column by
+      column moving the left most column first)
+
+
+  I think doing the second approach would be easiest, although we could
+  technically just do the loops in update_board() as well 
+
+  
+I think... that is it.... lol. if it is really easy we can focus more on
+aesthetics I guess 
+
+-noah 
+  
