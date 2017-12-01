@@ -4,7 +4,7 @@
 // Noah Yoshida
 // Last update: Dec 1 2017
 
-#include "gfx.h"
+// #include "gfx.h"
 #include <iostream>
 #include <cstdlib>
 #include <unistd.h>
@@ -33,6 +33,7 @@ class game{
     // Updates an individual square
     void update_square(char, int, int);
 
+    void add_random_square();
     // Prints board
     void print();
 
@@ -44,4 +45,4 @@ class game{
     int max_score;
     // temp_board[4][4]
     // stores the previous board state, used for animation?
-}
+};
