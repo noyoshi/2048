@@ -46,4 +46,17 @@ I think... that is it.... lol. if it is really easy we can focus more on
 aesthetics I guess 
 
 -noah 
-  
+
+I am thinking that maybe using a class definition would be best, for grading
+safety?
+
+class game(
+public:
+  ..
+  ..
+  play_turn(direction)
+  print()
+private:
+  grid[][]
+}
+
