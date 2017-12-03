@@ -8,10 +8,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <unistd.h>
+#include <time.h>
 #include <cmath>
 
 using namespace std;
-
 
 // Draws an individual square on the screen
 void draw_square(int, int, int, int, int);
@@ -30,10 +30,16 @@ class game{
     // Updates the board
     void update_board(char);
 
-    // Updates an individual square
-    void update_square(char, int, int);
+    // Add Adjacent Squares That Can Be Added 
+    void addSquares(char);
 
+	// Moves all Squares a Certain Direction
+	void moveSquares(char);
+
+
+	
     void add_random_square();
+
     // Prints board
     void print();
 

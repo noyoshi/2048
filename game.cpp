@@ -16,6 +16,7 @@ Already included in header file?
 */
 
 // By passing the game, g, by reference, we can modify it inside the function
+
 void draw_square(int x, int y, int value, int XSIZE, int YSIZE){
   // Draws a square on the board
 }
@@ -27,17 +28,14 @@ game::game(){
       board[i][j] = 0;
     }
   }
-  board[2][2] = 2;
+  board[2][2] = 2; 
   // Lowest possible score is a 2
   max_score = 2;
 }
 
-game::~game(){
-  // Destructor
-}
+game::~game(){} // Destructor
 
-void game::play(){
-  // Plays the game
+void game::play(){ // Plays The Game
 
   // Temp method to make sure logic works
   char c;
@@ -54,176 +52,214 @@ void game::play(){
     if(c == 'q') // End the game
       break;
 
-    update_board(c);
-    print();
-    add_random_square();
+	system("clear");
+
+	// Update the Board
+
+	moveSquares(c);
+	addSquares(c);
+	moveSquares(c);
+	add_random_square();
+
+	print();
     skip:;
     cout << "wasd to move, q to quit: ";
   }
 
 }
 
-void game::update_board(char dir){
-  // Updates the board after one turn
+
+void game::moveSquares(char dir){ // Function to Compress All Current Squares to a Single Side
+
   switch(dir){
-    case 119:
-      // Up
-      for(int i = 1; i < 4; i++){
-        // We do not have to check the top row, they do not move
-        for(int j = 0; j < 4; j++){
-          if(board[i][j] != 0)
-            update_square(dir, i, j);
-        }
-      }
+
+    case 119: // Up
+      
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			int count = 0;  // Count of non-zero elements
+
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row and Push Things Up
+
+				if (board[yCoord][xCoord] != 0){
+					board[count++][xCoord] = board[yCoord][xCoord];
+				}
+			}
+
+			// Now all non-zero elements have been shifted to 
+			// front and  'count' is set as index of first 0. 
+			// Make all elements 0 from count to end.
+
+			while (count < 4)
+				board[count++][xCoord] = 0;
+		}
+		
+      break;
+
+
+    case 115: // Down
+     
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			int count = 3;  // Count of non-zero elements
+
+			for (int yCoord = 3; yCoord >= 0; yCoord--){ // Go Through Every Row and Push Things Up
+
+				if (board[yCoord][xCoord] == 0){
+					continue;
+				}
+				else{
+					board[count--][xCoord] = board[yCoord][xCoord];
+				}
+			}
+
+			// Now all non-zero elements have been shifted to 
+			// front and  'count' is set as index of first 0. 
+			// Make all elements 0 from count to end.
+			
+
+			while (count >= 0)
+				board[count--][xCoord] = 0;
+		}
 
       break;
-    case 115:
-      // Down
-      for(int i = 2; i >= 0; i--){
-        // We do not have to check the bottom row, they do not move
-        for(int j = 0; j < 4; j++){
-          if(board[i][j] != 0)
-            update_square(dir, i, j);
-        }
-      }
 
-      break;
-    case 97:
-      // Left
-      for(int j = 1; j < 4; j++){
-        // We do not have to check the left row, they do not move
-        for(int i = 3; i >= 0; i--){
-          if(board[i][j] != 0)
-            update_square(dir, i, j);
-        }
-      }
 
+    case 97: // Left
+
+		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
+
+			int count = 0;  // Count of non-zero elements
+
+			for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Every Column and Push Things Left
+
+				if (board[yCoord][xCoord] != 0){
+					board[yCoord][count++] = board[yCoord][xCoord];
+				}
+			}
+
+			// Now all non-zero elements have been shifted to 
+			// front and  'count' is set as index of first 0. 
+			// Make all elements 0 from count to end.
+
+			while (count < 4)
+				board[yCoord][count++] = 0;
+		}
+     
       break;
-    case 100:
-      // Right
-      for(int j = 2; j >= 0; j--){
-        // We do not have to check the right row, they do not move
-        for(int i = 0; i < 4; i++){
-          if(board[i][j] != 0)
-            update_square(dir, i, j);
-        }
-      }
+
+    case 100: // Right
+
+		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
+
+			int count = 3;  // Count of non-zero elements
+
+			for (int xCoord = 3; xCoord >= 0; xCoord--){ // Go Through Every Column and Push Things Right
+
+				if (board[yCoord][xCoord] == 0){
+					continue;
+				}
+				else{
+					board[yCoord][count--] = board[yCoord][xCoord];
+				}
+
+			}
+
+			// Now all non-zero elements have been shifted to 
+			// front and  'count' is set as index of first 0. 
+			// Make all elements 0 from count to end.
+
+
+			while (count >= 0)
+				board[yCoord][count--] = 0;
+		}
       break;
   }
 }
 
-void game::update_square(char dir, int i, int j){
-  // Called in update_board for every square, this function updates the position
-  // and possibly the value of a square being moved
+void game::addSquares(char dir){
+	
+	switch (dir){
 
-  cout << "updating " << i << " " << j << endl;
-  switch(dir){
-    case 119:
-      // Up
-      while(board[i-1][j] == 0 and i >= 0){
-        // While not at top edge and the next space is empty
+	case 119: // Up
 
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
-        board[i-1][j] = board[i][j];
-        board[i][j] = 0;
-        // Moves the square, incriments to the next loation
-        i --;
-      }
-      if(i < 0){
-        i = 0;
-      }
-      if(board[i-1][j] == board[i][j]){
-        // If the next square is of equal value
-        board[i-1][j] += board[i][j];
-        board[i][j] = 0;
-        break;
-        // Due to the order we traverse the grid, we will never have a case
-        // where two blocks combine, then the combined block will move
-      }
-      break;
-    case 115:
-      // Down
-      while(board[i+1][j] == 0 and i != 4){
-        // While not at bottom edge and the next space is empty
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Add Things, Prioritizing Lower Index Values
 
+				if (board[yCoord][xCoord] == board[yCoord + 1][xCoord]){
+					board[yCoord][xCoord] = board[yCoord][xCoord] * 2;
+					board[yCoord + 1][xCoord] = 0;
+				}
+			}
+		}
 
-        board[i+1][j] = board[i][j];
-        board[i][j] = 0;
-        // Moves the square, incriments to the next loation
-        i ++;
-      }
-      if(i > 3){
-        i = 3;
-      }
-      if(board[i+1][j] == board[i][j]){
-        // If the next square is of equal value
-        board[i+1][j] += board[i][j];
-        board[i][j] = 0;
-        break;
-        // Due to the order we traverse the grid, we will never have a case
-        // where two blocks combine, then the combined block will move
-      }
-      break;
-    case 97:
-      // Left
-      while(board[i][j-1] == 0 and j >= 0){
-        // While not at bottom edge and the next space is empty
+		break;
+
+	case 115: // Down
+		
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			for (int yCoord = 3; yCoord >= 0; yCoord--){ // Add Things, Prioritizing Lower Higher Values
+
+				if (board[yCoord][xCoord] == board[yCoord - 1][xCoord]){
+					board[yCoord][xCoord] = board[yCoord][xCoord] * 2;
+					board[yCoord - 1][xCoord] = 0;
+				}
+			}
+		}
+
+		break;
 
 
-        board[i][j-1] = board[i][j];
-        board[i][j] = 0;
-        // Moves the square, incriments to the next loation
-        j --;
-      }
-      if(j < 0){
-        j = 1;
-      }
-      if(board[i][j-1] == board[i][j]){
-        // If the next square is of equal value
-        board[i][j-1] += board[i][j];
-        board[i][j] = 0;
-        break;
-        // Due to the order we traverse the grid, we will never have a case
-        // where two blocks combine, then the combined block will move
-      }
-      break;
-    case 100:
-      // Right
-      while(board[i][j+1] == 0 and j < 4){
-        // While not at bottom edge and the next space is empty
+	case 97: // Left
+
+		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
+
+			for (int xCoord = 0; xCoord < 4; xCoord++){ // Add Things, Prioritizing Lower Index Values
+
+				if (board[yCoord][xCoord] == board[yCoord][xCoord + 1]){
+					board[yCoord][xCoord] = board[yCoord][xCoord] * 2;
+					board[yCoord][xCoord + 1] = 0;
+				}
+			}
+		}
+
+		break;
 
 
-        board[i][j+1] = board[i][j];
-        board[i][j] = 0;
-        // Moves the square, incriments to the next loation
-        j ++;
-      }
-      if(j > 3){
-        j --;
-      }
-      if(board[i][j+1] == board[i][j]){
-        // If the next square is of equal value
-        board[i][j+1] += board[i][j];
-        board[i][j] = 0;
-        break;
-        // Due to the order we traverse the grid, we will never have a case
-        // where two blocks combine, then the combined block will move
-      }
-      break;
-  }
+	case 100: // Right
+
+		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
+
+			for (int xCoord = 3; xCoord >= 0; xCoord--){ // Add Things, Prioritizing Lower Index Values
+
+				if (board[yCoord][xCoord] == board[yCoord][xCoord - 1]){
+					board[yCoord][xCoord] = board[yCoord][xCoord] * 2;
+					board[yCoord][xCoord - 1] = 0;
+				}
+			}
+		}
+
+		break;
+	}
 }
 
 void game::add_random_square(){
-  // Temporary, non-random tester
-  for(int i = 0; i < 4; i++){
-    for(int j = 0; j < 4; j++){
-      if(board[i][j] == 0){
-        board[i][j] = 2;
-        goto end;
-      }
-    }
-  }
-  end:;
+  
+	srand(time(NULL));
+
+	while (true){
+
+		// Randomize a Location
+		int xCoord = rand() % 3;
+		int yCoord = rand() % 3;
+
+		if (board[yCoord][xCoord] == 0){
+			board[yCoord][xCoord] = 2;
+			break;
+		}
+	}
 }
 
 void game::print(){

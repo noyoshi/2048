@@ -9,6 +9,7 @@
 using namespace std;
 
 int main(){
+
   char direction;
   game g;
   g.play();
