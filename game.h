@@ -36,19 +36,16 @@ class game{
 	// Moves all Squares a Certain Direction
 	void moveSquares(char);
 
-
 	
-    void add_random_square();
+	void addRandomSquare();
 
     // Prints board
     void print();
 
-    // Prints the end screen? When the game ends
-    // void end_screen();
+
   private:
     // Stores the values of the squares at each position
     int board[4][4];
-    int max_score;
-    // temp_board[4][4]
-    // stores the previous board state, used for animation?
+    int maxScore;
+   
 };

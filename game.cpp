@@ -1,19 +1,11 @@
 // game.cpp
 // Class game implementation
 
-// Noah Yoshida
-// Last updated: Dec 1 2017
+// Noah Yoshida + Allen Duong
+// Last updated: Dec 3 2017
 
 // #include "gfx.h"
 #include "game.h"
-
-/*
-Already included in header file?
-#include <iostream>
-#include <cstdlib>
-#include <unistd.h>
-#include <cmath>
-*/
 
 // By passing the game, g, by reference, we can modify it inside the function
 
@@ -22,15 +14,19 @@ void draw_square(int x, int y, int value, int XSIZE, int YSIZE){
 }
 
 game::game(){
+
   // Fills the board with 0's, which are the default value
   for(int i = 0; i < 4; i++){
     for(int j = 0; j < 4; j++){
       board[i][j] = 0;
     }
   }
-  board[2][2] = 2; 
+
+  /// Randomly Place First Piece
+  addRandomSquare();
+
   // Lowest possible score is a 2
-  max_score = 2;
+  maxScore = 2;
 }
 
 game::~game(){} // Destructor
@@ -245,7 +241,7 @@ void game::addSquares(char dir){
 	}
 }
 
-void game::add_random_square(){
+void game::addRandomSquare(){
   
 	srand(time(NULL));
 
