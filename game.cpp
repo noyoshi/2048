@@ -2,75 +2,87 @@
 // Class game implementation
 
 // Noah Yoshida + Allen Duong
-// Last updated: Dec 3 2017
+// Last updated: Dec 3 2017:
+//		- Removed GoTo's
+//		- Added Animation
 
-// #include "gfx.h"
 #include "game.h"
+#include "gfx.h"
 
-// By passing the game, g, by reference, we can modify it inside the function
+void drawSquare(int xCoord, int yCoord){
+	// Draws a square on the board
+	// Point Provided is the Upper Left Corner of the Square
+	// Dimensions are 175 x 175 Pixels
+	
+	gfx_line(xCoord, yCoord, xCoord + 150 , yCoord); // Top Line
+	gfx_line(xCoord + 150, yCoord, xCoord + 150, yCoord + 150); // Right Line
+	gfx_line(xCoord, yCoord + 150, xCoord + 150, yCoord + 150); // Bottom Line
+	gfx_line(xCoord, yCoord, xCoord, yCoord + 150); // Left Line
 
-void draw_square(int x, int y, int value, int XSIZE, int YSIZE){
-  // Draws a square on the board
+	for (int i = yCoord; i < (yCoord + 150); i++){ // Fill the Square
+
+		gfx_line(xCoord, i, xCoord + 150, i);
+
+	}
 }
 
 game::game(){
 
-  // Fills the board with 0's, which are the default value
-  for(int i = 0; i < 4; i++){
-    for(int j = 0; j < 4; j++){
-      board[i][j] = 0;
-    }
-  }
+	// Fills the board with 0's, which are the default value
+	for (int i = 0; i < 4; i++){
+		for (int j = 0; j < 4; j++){
+			board[i][j] = 0;
+		}
+	}
 
-  /// Randomly Place First Piece
-  addRandomSquare();
+	/// Randomly Place First Piece
+	addRandomSquare();
 
-  // Lowest possible score is a 2
-  maxScore = 2;
+	// Lowest possible score is a 2
+	maxScore = 2;
 }
 
 game::~game(){} // Destructor
 
 void game::play(){ // Plays The Game
 
-  // Temp method to make sure logic works
-  char c;
-  cout << "wasd to move, q to quit: ";
-  print();
-  while(cin >> c){
-    // Play game
-    if(c != 97 and c!= 119 and c!= 115 and c!= 100 and c!= 'q'){
-      cout << c << endl;
-      cout << "Bad input, please try again.\n";
-      goto skip;
-    }
+	// Set Basic Variables
+	int width =725;	// Width
+	int height = 725;	// Height
+	char c;				// Keyboard Input
 
-    if(c == 'q') // End the game
-      break;
+	// Open a New Window for Drawing
+	gfx_open(width, height, "2048.cpp");
 
-	system("clear");
+	while (c != 27){ // ESC Key Exits the Program
 
-	// Update the Board
+		print();
 
-	moveSquares(c);
-	addSquares(c);
-	moveSquares(c);
-	add_random_square();
+		// Play game
+		c = gfx_wait();
 
-	print();
-    skip:;
-    cout << "wasd to move, q to quit: ";
-  }
+		if ((c != 'w') and (c != 'a') and (c != 's') and (c != 'd') and (c != 27)){
+			continue;
+		}
+
+		// Update the Board
+
+		moveSquares(c);
+		addSquares(c);
+		moveSquares(c);
+		addRandomSquare();
+
+	}
 
 }
 
 
 void game::moveSquares(char dir){ // Function to Compress All Current Squares to a Single Side
 
-  switch(dir){
+	switch (dir){
 
-    case 119: // Up
-      
+	case 'w': // Up
+
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
 			int count = 0;  // Count of non-zero elements
@@ -89,12 +101,12 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			while (count < 4)
 				board[count++][xCoord] = 0;
 		}
-		
-      break;
+
+		break;
 
 
-    case 115: // Down
-     
+	case 's': // Down
+
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
 			int count = 3;  // Count of non-zero elements
@@ -112,16 +124,16 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			// Now all non-zero elements have been shifted to 
 			// front and  'count' is set as index of first 0. 
 			// Make all elements 0 from count to end.
-			
+
 
 			while (count >= 0)
 				board[count--][xCoord] = 0;
 		}
 
-      break;
+		break;
 
 
-    case 97: // Left
+	case 'a': // Left
 
 		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
 
@@ -141,10 +153,10 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			while (count < 4)
 				board[yCoord][count++] = 0;
 		}
-     
-      break;
 
-    case 100: // Right
+		break;
+
+	case 'd': // Right
 
 		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
 
@@ -169,15 +181,15 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			while (count >= 0)
 				board[yCoord][count--] = 0;
 		}
-      break;
-  }
+		break;
+	}
 }
 
 void game::addSquares(char dir){
-	
+
 	switch (dir){
 
-	case 119: // Up
+	case 'w': // Up
 
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
@@ -192,8 +204,8 @@ void game::addSquares(char dir){
 
 		break;
 
-	case 115: // Down
-		
+	case 's': // Down
+
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
 			for (int yCoord = 3; yCoord >= 0; yCoord--){ // Add Things, Prioritizing Lower Higher Values
@@ -208,7 +220,7 @@ void game::addSquares(char dir){
 		break;
 
 
-	case 97: // Left
+	case 'a': // Left
 
 		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
 
@@ -224,7 +236,7 @@ void game::addSquares(char dir){
 		break;
 
 
-	case 100: // Right
+	case 'd': // Right
 
 		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
 
@@ -242,7 +254,7 @@ void game::addSquares(char dir){
 }
 
 void game::addRandomSquare(){
-  
+
 	srand(time(NULL));
 
 	while (true){
@@ -259,28 +271,121 @@ void game::addRandomSquare(){
 }
 
 void game::print(){
-  // Prints the board state to the screen
-  /*
-  int const XSIZE = 800, YSIZE = 800;
-  char input;
 
-  gfx_open(XSIZE, YSIZE, "2048");
-  */
-  // TODO: First, we are going to just make sure logic works. This will
-  // draw to command line for that.
+	/** COMMAND LINE GRAPHICS (USED FOR TESTING)
+			cout << "_________________\n";
+			for (int i = 0; i < 4; i++){
+				cout << "| ";
+				for (int j = 0; j < 4; j++){
+					cout << board[i][j] << " ";
+				}
+				cout << "|\n";
+			}
+			cout << "_________________\n";
+			cout << "Max score: " << maxScore << endl;
 
-  cout << "_________________\n";
-  for(int i = 0; i < 4; i++){
-    cout << "| ";
-    for(int j = 0; j < 4; j++){
-      cout << board[i][j] << " ";
-    }
-    cout << "|\n";
-  }
-  cout << "_________________\n";
-  cout << "Max score: " << max_score << endl;
+	**/
+
+	// COLORS FOR ALL 2048 TILES
+	// Background: rgb(187,173,160)
+	// Empty Square: rgb(205,192,180)
+	// 2 Square: rgb(238,228,218)
+	// 4 Square: rgb(237,224,200)
+	// 8 Square: rgb(242,177,121)
+	// 16 Square: rgb(245,149,99)
+	// 32 Square: rgb(246,124,95)
+	// 64 Square: rgb(246,94,59)
+	// 128 Square: rgb(237,207,114)
+	// 256 Square: rgb(237,204,97)
+	// 512 Square: rgb(237,200,80)
+	// 1024 Square: rgb(237,197,63)
+	// 2048 Square: rgb(237,194,46)
+	// 4096++ Square: rgb(60,58,50)
+	
+	// Clear Screen
+	gfx_clear_color(187, 173, 160);
+	gfx_clear();
+
+	// Place Boxes (Box Dimension 225 x 225) (Border Thickness 25px)
+	
+	XPoint initialPos;
+	initialPos.x = 25;
+	initialPos.y = 25;
+
+	// Draw All Tiles of board On Graphics Window
+	for (int i = 0; i < 4; i++){ // xCoord Index
+
+		for (int j = 0; j < 4; j++){ // yCoord Index
+
+			if (board[j][i] == 0){
+				gfx_color(205, 192, 180);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "0");
+			}
+			else if (board[j][i] == 2){
+				gfx_color(238, 228, 218);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				//gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "2");
+			}
+			else if (board[j][i] == 4){
+				gfx_color(237, 224, 200);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				//gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "4");
+			}
+			else if (board[j][i] == 8){
+				gfx_color(242, 177, 121);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				//gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "8");
+			}
+			else if (board[j][i] == 16){
+				gfx_color(245, 149, 99);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				//gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "16");
+			}
+			else if (board[j][i] == 32){
+				gfx_color(246, 124, 95);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				//gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "32");
+			}
+			else if (board[j][i] == 64){
+				gfx_color(246, 94, 59);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				//gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "64");
+			}
+			else if (board[j][i] == 128){
+				gfx_color(237, 207, 114);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "128");
+			}
+			else if (board[j][i] == 256){
+				gfx_color(237, 204, 97);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "256");
+			}
+			else if (board[j][i] == 512){
+				gfx_color(237, 200, 80);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "512");
+			}
+			else if (board[j][i] == 1024){
+				gfx_color(237, 197, 63);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "1024");
+			}
+			else if (board[j][i] == 2048){
+				gfx_color(237, 194, 46);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "2048");
+			}
+			else{
+				string x = to_string(board[j][i]);
+				gfx_color(60, 58, 50);
+				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
+				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, x);
+			}
+
+		}
+	}
+
 }
 
-// void game::end_screen(){
-//   // End screen? Might not need this, we shall see
-// }

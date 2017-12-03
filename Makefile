@@ -1,4 +1,4 @@
-CMP = g++ -std=c++11
+CMP = g++ -std=c++11 gfx.o -lX11
 CLASS = game
 MAIN = 2048
 EXEC = 2048

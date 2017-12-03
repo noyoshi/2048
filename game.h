@@ -10,16 +10,16 @@
 #include <unistd.h>
 #include <time.h>
 #include <cmath>
+#include <string>
+#include "gfx.h"
 
 using namespace std;
 
 // Draws an individual square on the screen
 void draw_square(int, int, int, int, int);
 
-// void animate_transition()
-// used if we want to animate each turn?
-
 class game{
+
   public:
     game();
     ~game();
@@ -27,21 +27,17 @@ class game{
     // Plays game
     void play();
 
-    // Updates the board
-    void update_board(char);
-
     // Add Adjacent Squares That Can Be Added 
     void addSquares(char);
 
 	// Moves all Squares a Certain Direction
 	void moveSquares(char);
 
-	
+	// Place a '2' on the Board in a Random Empty Location
 	void addRandomSquare();
 
     // Prints board
     void print();
-
 
   private:
     // Stores the values of the squares at each position
