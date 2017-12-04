@@ -7,10 +7,9 @@ create 2048 for our fund comp final project.
 
 2048 can be found here: https://github.com/gabrielecirulli/2048
 
-TODO
+TODO / BUGS
 ---
 
-- [ ] Write class implementations
-- [ ] Write helper functions (gfx)
-- [ ] Determine how to draw each box (math)
-- [ ] Write main
+- [ ] BUG: If a single empty line is left, no movement is able to be completed
+- [ ] BUG: If no movement occurs, a random block is still generated
+- [ ] TODO: Possibly write our own text() function to label numbers larger
