@@ -11,7 +11,7 @@
 #include <time.h>
 #include <cmath>
 #include <string>
-#include "gfx.h"
+#include "gfxnew.h"
 
 using namespace std;
 
