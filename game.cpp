@@ -77,7 +77,7 @@ void game::play(){ // Plays The Game
       print();
       // gfx_flush();
       c = 0;
-      usleep(4000000);
+      // usleep(4000000);
 
 	}
 
