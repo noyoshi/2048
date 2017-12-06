@@ -12,7 +12,7 @@ TODO / BUGS
 
 - [ ] BUG: If a single empty line is left, no movement is able to be completed
 - [ ] BUG: If no movement occurs, a random block is still generated
-- [ ] TODO: Possibly write our own text() function to label numbers larger
+- [ ] TODO: Make it only play once per key press 
 
 USAGE
 ---
