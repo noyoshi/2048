@@ -59,12 +59,13 @@ void game::play(){ // Plays The Game
 		print();
 
 		// Play game
+   
 		c = gfx_wait();
 
-		if ((c != 'w') and (c != 'a') and (c != 's') and (c != 'd') and (c != 27)){
-			continue;
-		}
-
+	  if ((c != 'w') and (c != 'a') and (c != 's') and (c != 'd') and (c != 27)){
+      continue;
+	  }
+    
 		// Update the Board
 
 		moveSquares(c);
