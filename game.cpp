@@ -7,7 +7,7 @@
 //		- Added Animation
 
 #include "game.h"
-#include "gfx.h"
+#include "gfxnew.h"
 
 void drawSquare(int xCoord, int yCoord){
 	// Draws a square on the board
