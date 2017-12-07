@@ -10,11 +10,11 @@ create 2048 for our fund comp final project.
 TODO / BUGS
 ---
 
-- [ ] TODO: Fix the random square adder function - right now it is not optimized
+- [x] TODO: Fix the random square adder function - right now it is not optimized
 for end of game cases (the odd of choosing a valid location randomly is very small)
-- [ ] BUG: If no movement occurs, a random block is still generated
-- [ ] TODO: Make it only play once per key press
-- [ ] TODO: Add MAx Score Feature
+- [x] BUG: If no movement occurs, a random block is still generated
+- [x] TODO: Make it only play once per key press
+- [ ] TODO: Add max score feature
 
 USAGE
 ---
