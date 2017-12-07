@@ -8,8 +8,6 @@
 
 #include "game.h"
 #include "gfxnew.h"
-#include <algorithm>
-#include <vector>
 
 void drawSquare(int xCoord, int yCoord){
 	// Draws a square on the board
@@ -41,6 +39,24 @@ void copyBoard(int board1[4][4], int board2[4][4]){
 	}
 }
 
+// Function to Return if Board is Full
+bool endGame(int temp[4][4]){
+
+	for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row and Push Things Up
+
+			if (temp[yCoord][xCoord] == 0){
+
+				return false;
+
+			}
+		}
+	}
+
+	return true;
+
+}
 game::game(){
 
 	// Fills the board with 0's, which are the default value
@@ -63,7 +79,7 @@ void game::play(){ // Plays The Game
 
 	// Set Basic Variables
 	int width = 725;	// Width
-	int height = 725;	// Height
+	int height = 750;	// Height
 	char c;				// Keyboard Input
 	int event;
 
@@ -76,13 +92,16 @@ void game::play(){ // Plays The Game
 
 	while (c != 27){
 
+		gfx_color(0, 0, 0);
+		gfx_text(10, 735, "Use the Arrow Keys to Play! ESC to Leave Game!");
+
 		// Play game
 		event = gfx_event_waiting();
 
 		if (event){
 			c = gfx_wait();
 			if (event == 2){
-				if ((c != 'w') and(c != 'a') and(c != 's') and(c != 'd') and(c != 27)){
+				if ((c != 'Q') and(c != 'S') and(c != 'R') and(c != 'T') and(c != 27)){
 					continue;
 				}
 
@@ -98,6 +117,14 @@ void game::play(){ // Plays The Game
 
 			}
 		}
+
+		// If Board is Full --> Display End Game Screen
+		if (endGame(board)){
+
+			endGameWindow();
+			break;
+		}
+
 	}
 }
 
@@ -110,7 +137,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 	switch (dir){
 
-	case 'w': // Up
+	case 'R': // Up
 
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
@@ -150,7 +177,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 		break;
 
 
-	case 's': // Down
+	case 'T': // Down
 
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
@@ -194,7 +221,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 		break;
 
 
-	case 'a': // Left
+	case 'Q': // Left
 
 		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
 
@@ -234,7 +261,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 		break;
 
-	case 'd': // Right
+	case 'S': // Right
 
 		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
 
@@ -290,7 +317,7 @@ bool game::addSquares(char dir){
 
 	switch (dir){
 
-	case 'w': // Up
+	case 'R': // Up
 
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
@@ -318,7 +345,7 @@ bool game::addSquares(char dir){
 
 		break;
 
-	case 's': // Down
+	case 'T': // Down
 
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
@@ -347,7 +374,7 @@ bool game::addSquares(char dir){
 		break;
 
 
-	case 'a': // Left
+	case 'Q': // Left
 
 		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
 
@@ -376,7 +403,7 @@ bool game::addSquares(char dir){
 		break;
 
 
-	case 'd': // Right
+	case 'S': // Right
 
 		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
 
@@ -407,22 +434,20 @@ bool game::addSquares(char dir){
 }
 
 void game::addRandomSquare(){
+	// TODO: Fix this
+	srand(time(NULL));
 
-  srand(time(NULL));
-  vector<int> openx;
-  vector<int> openy;
+	while (true){
 
-  for(int i = 0; i < 4; i ++){
-    for(int j = 0; j < 4; j ++){
-      if(board[i][j] == 0){
-        openx.push_back(i);
-        openy.push_back(j);
-      }
-    }
-  }
-  int x = rand() % openx.size();
-  board[openx[x]][openy[x]] = 2;
-  
+		// Randomize a Location
+		int xCoord = rand() % 3;
+		int yCoord = rand() % 3;
+
+		if (board[yCoord][xCoord] == 0){
+			board[yCoord][xCoord] = 2;
+			break;
+		}
+	}
 }
 
 void game::print(){
@@ -580,4 +605,30 @@ void game::print(){
 		}
 	}
 
+}
+
+void game::endGameWindow(){
+
+	int temp = 0;
+
+	// Check for Highest Value Tile
+	for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Each Row
+
+			if (board[yCoord][xCoord] > temp){
+				temp = board[yCoord][xCoord];
+			}
+		}
+	}
+	
+	maxScore = temp;
+
+	gfx_open(300, 200, "You Lost!");
+	gfx_text(125, 85, "GAME OVER!!");
+
+	// Convert Max Score to String
+	char phrase[] = "Max Score: ";
+
+	gfx_text(125, 95, phrase);
 }

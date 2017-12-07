@@ -40,7 +40,7 @@ class game{
     void print();
 
 	// Check for End Game [TO DO]
-
+	void endGameWindow();
 
   private:
     // Stores the values of the squares at each position
