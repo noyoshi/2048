@@ -26,6 +26,19 @@ void drawSquare(int xCoord, int yCoord){
 	}
 }
 
+// Function to Copy Board 1 to Board 2
+void copyBoard(int board1[4][4], int board2[4][4]){
+
+	for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row
+
+			board2[yCoord][xCoord] = board1[yCoord][xCoord];
+
+		}
+	}
+}
+
 game::game(){
 
 	// Fills the board with 0's, which are the default value
@@ -55,13 +68,15 @@ void game::play(){ // Plays The Game
 	// Open a New Window for Drawing
 	gfx_open(width, height, "2048.cpp");
 	print();
-	event = gfx_event_waiting();
-	c = gfx_wait();
-	//gfx_flush();
+
 	bool movement = false;
+	bool add = false;
+
 	while (c != 27){
+
 		// Play game
 		event = gfx_event_waiting();
+
 		if (event){
 			c = gfx_wait();
 			if (event == 2){
@@ -69,29 +84,27 @@ void game::play(){ // Plays The Game
 					continue;
 				}
 
-
-				movement = false;
 				movement = moveSquares(c);
-				if (movement){
-					addSquares(c);
-					moveSquares(c);
+				add = addSquares(c);
+				moveSquares(c);
+
+				if (movement || add){
 					addRandomSquare();
-					print();
 				}
+
+				print();
+
 			}
 		}
-
-		// c = 0;
-		// usleep(4000000);
-		// }
 	}
-
 }
 
 
 bool game::moveSquares(char dir){ // Function to Compress All Current Squares to a Single Side
 
-	bool movement = false;
+	// Decalre Variables
+	int temp[4][4];
+	copyBoard(board, temp);
 
 	switch (dir){
 
@@ -115,11 +128,23 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 			while (count < 4){
 				board[count++][xCoord] = 0;
-				movement = true;
 			}
 
 		}
 
+		// Check If New Arrays are Same as Old Arrays
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row
+
+				if (board[yCoord][xCoord] != temp[yCoord][xCoord]){ // If Board has changed, return true
+					return true;
+				}
+			}
+		}
+
+		return false;
+		
 		break;
 
 
@@ -147,9 +172,22 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 			while (count >= 0){
 				board[count--][xCoord] = 0;
-				movement = true;
 			}
 		}
+
+		
+		// Check If New Arrays are Same as Old Arrays
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row
+
+				if (board[yCoord][xCoord] != temp[yCoord][xCoord]){ // If Board has changed, return true
+					return true;
+				}
+			}
+		}
+
+		return false;
 
 		break;
 
@@ -174,10 +212,23 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 			while (count < 4){
 				board[yCoord][count++] = 0;
-				movement = true;
 			}
 
 		}
+
+		
+		// Check If New Arrays are Same as Old Arrays
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row
+
+				if (board[yCoord][xCoord] != temp[yCoord][xCoord]){ // If Board has changed, return true
+					return true;
+				}
+			}
+		}
+
+		return false;
 
 		break;
 
@@ -206,15 +257,34 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 			while (count >= 0){
 				board[yCoord][count--] = 0;
-				movement = true;
 			}
 		}
+
+		
+		// Check If New Arrays are Same as Old Arrays
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row
+
+				if (board[yCoord][xCoord] != temp[yCoord][xCoord]){ // If Board has changed, return true
+					return true;
+				}
+			}
+		}
+
+		return false;
+
 		break;
 	}
-	return movement;
+
+	return true;
 }
 
-void game::addSquares(char dir){
+bool game::addSquares(char dir){
+
+	// Decalre Variables
+	int temp[4][4];
+	copyBoard(board, temp);
 
 	switch (dir){
 
@@ -231,6 +301,19 @@ void game::addSquares(char dir){
 			}
 		}
 
+		// Check If New Arrays are Same as Old Arrays
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row
+
+				if (board[yCoord][xCoord] != temp[yCoord][xCoord]){ // If Board has changed, return true
+					return true;
+				}
+			}
+		}
+
+		return false;
+
 		break;
 
 	case 's': // Down
@@ -245,6 +328,19 @@ void game::addSquares(char dir){
 				}
 			}
 		}
+
+		// Check If New Arrays are Same as Old Arrays
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row
+
+				if (board[yCoord][xCoord] != temp[yCoord][xCoord]){ // If Board has changed, return true
+					return true;
+				}
+			}
+		}
+
+		return false;
 
 		break;
 
@@ -262,6 +358,19 @@ void game::addSquares(char dir){
 			}
 		}
 
+		// Check If New Arrays are Same as Old Arrays
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row
+
+				if (board[yCoord][xCoord] != temp[yCoord][xCoord]){ // If Board has changed, return true
+					return true;
+				}
+			}
+		}
+
+		return false;
+
 		break;
 
 
@@ -277,6 +386,19 @@ void game::addSquares(char dir){
 				}
 			}
 		}
+
+		// Check If New Arrays are Same as Old Arrays
+		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+
+			for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row
+
+				if (board[yCoord][xCoord] != temp[yCoord][xCoord]){ // If Board has changed, return true
+					return true;
+				}
+			}
+		}
+
+		return false;
 
 		break;
 	}

@@ -28,7 +28,7 @@ class game{
     void play();
 
     // Add Adjacent Squares That Can Be Added
-    void addSquares(char);
+    bool addSquares(char);
 
 	// Moves all Squares a Certain Direction
 	bool moveSquares(char);
