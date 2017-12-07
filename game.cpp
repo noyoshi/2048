@@ -8,6 +8,8 @@
 
 #include "game.h"
 #include "gfxnew.h"
+#include <algorithm>
+#include <vector>
 
 void drawSquare(int xCoord, int yCoord){
 	// Draws a square on the board
@@ -405,20 +407,22 @@ bool game::addSquares(char dir){
 }
 
 void game::addRandomSquare(){
-	// TODO: Fix this
-	srand(time(NULL));
 
-	while (true){
+  srand(time(NULL));
+  vector<int> openx;
+  vector<int> openy;
 
-		// Randomize a Location
-		int xCoord = rand() % 3;
-		int yCoord = rand() % 3;
-
-		if (board[yCoord][xCoord] == 0){
-			board[yCoord][xCoord] = 2;
-			break;
-		}
-	}
+  for(int i = 0; i < 4; i ++){
+    for(int j = 0; j < 4; j ++){
+      if(board[i][j] == 0){
+        openx.push_back(i);
+        openy.push_back(j);
+      }
+    }
+  }
+  int x = rand() % openx.size();
+  board[openx[x]][openy[x]] = 2;
+  
 }
 
 void game::print(){
