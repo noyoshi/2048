@@ -14,6 +14,7 @@ TODO / BUGS
 for end of game cases (the odd of choosing a valid location randomly is very small)
 - [ ] BUG: If no movement occurs, a random block is still generated
 - [ ] TODO: Make it only play once per key press
+- [ ] TODO: Add MAx Score Feature
 
 USAGE
 ---
