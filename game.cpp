@@ -413,14 +413,9 @@ void game::addRandomSquare(){
 		// Randomize a Location
 		int xCoord = rand() % 3;
 		int yCoord = rand() % 3;
-		bool found = false;
+
 		if (board[yCoord][xCoord] == 0){
 			board[yCoord][xCoord] = 2;
-			found = true;
-			break;
-		}
-		if (not found){
-			cout << "END OF GAME" << endl;
 			break;
 		}
 	}
@@ -479,6 +474,10 @@ void game::print(){
 	char fivehundo[] = "512";
 	char thousand[] = "1024";
 	char twofoureight[] = "2048";
+
+	int textOffsetX = 65;
+	int textOffsety = 85;
+
 	// char myText[]
 	gfx_changefont(theFont);
 
@@ -490,90 +489,89 @@ void game::print(){
 			if (board[j][i] == 0){
 				gfx_color(205, 192, 180);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "0");
 			}
 			else if (board[j][i] == 2){
 				char myText[] = "2";
 				gfx_color(238, 228, 218);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, two);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, two);
 			}
 			else if (board[j][i] == 4){
 				char myText[] = "4";
 				gfx_color(237, 224, 200);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, four);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, four);
 			}
 			else if (board[j][i] == 8){
 				char myText[] = "8";
 				gfx_color(242, 177, 121);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, eight);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, eight);
 			}
 			else if (board[j][i] == 16){
 				char myText[] = "16";
 				gfx_color(245, 149, 99);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, sixteen);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, sixteen);
 			}
 			else if (board[j][i] == 32){
 				char myText[] = "32";
 				gfx_color(246, 124, 95);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, thritytwo);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, thritytwo);
 			}
 			else if (board[j][i] == 64){
 				char myText[] = "64";
 				gfx_color(246, 94, 59);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, sixtyfour);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, sixtyfour);
 			}
 			else if (board[j][i] == 128){
 				char myText[] = "128";
 				gfx_color(237, 207, 114);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, onetwentyeight);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, onetwentyeight);
 			}
 			else if (board[j][i] == 256){
 				char myText[] = "256";
 				gfx_color(237, 204, 97);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, twofiftysix);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, twofiftysix);
 			}
 			else if (board[j][i] == 512){
 				char myText[] = "512";
 				gfx_color(237, 200, 80);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, fivehundo);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, fivehundo);
 			}
 			else if (board[j][i] == 1024){
 				char myText[] = "1024";
 				gfx_color(237, 197, 63);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, thousand);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, thousand);
 			}
 			else if (board[j][i] == 2048){
 				char myText[] = "2048";
 				gfx_color(237, 194, 46);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				gfx_color(0, 0, 0);
-				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, twofoureight);
+				gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + textOffsety, twofoureight);
 			}
 			else{
 				// string x  = "NaN";
 				gfx_color(60, 58, 50);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, x);
+				// gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + 75, x);
 			}
 		}
 	}

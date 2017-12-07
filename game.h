@@ -39,6 +39,9 @@ class game{
     // Prints board
     void print();
 
+	// Check for End Game [TO DO]
+
+
   private:
     // Stores the values of the squares at each position
     int board[4][4];
