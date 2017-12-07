@@ -14,7 +14,7 @@ void drawSquare(int xCoord, int yCoord){
 	// Point Provided is the Upper Left Corner of the Square
 	// Dimensions are 175 x 175 Pixels
 
-	gfx_line(xCoord, yCoord, xCoord + 150 , yCoord); // Top Line
+	gfx_line(xCoord, yCoord, xCoord + 150, yCoord); // Top Line
 	gfx_line(xCoord + 150, yCoord, xCoord + 150, yCoord + 150); // Right Line
 	gfx_line(xCoord, yCoord + 150, xCoord + 150, yCoord + 150); // Bottom Line
 	gfx_line(xCoord, yCoord, xCoord, yCoord + 150); // Left Line
@@ -47,43 +47,43 @@ game::~game(){} // Destructor
 void game::play(){ // Plays The Game
 
 	// Set Basic Variables
-	int width =725;	// Width
+	int width = 725;	// Width
 	int height = 725;	// Height
 	char c;				// Keyboard Input
-  int event;
+	int event;
 
 	// Open a New Window for Drawing
 	gfx_open(width, height, "2048.cpp");
-  print();
-  event = gfx_event_waiting();
-  c = gfx_wait();
-  //gfx_flush();
-  bool movement = false;
-	while (c!=27){
+	print();
+	event = gfx_event_waiting();
+	c = gfx_wait();
+	//gfx_flush();
+	bool movement = false;
+	while (c != 27){
 		// Play game
-    event = gfx_event_waiting();
-      if(event){
-  		  c = gfx_wait();
-        if(event == 2){ 
-    	    if ((c != 'w') and (c != 'a') and (c != 's') and (c != 'd') and (c != 27)){
-          continue;
-  	      }
+		event = gfx_event_waiting();
+		if (event){
+			c = gfx_wait();
+			if (event == 2){
+				if ((c != 'w') and(c != 'a') and(c != 's') and(c != 'd') and(c != 27)){
+					continue;
+				}
 
-  		
-          movement = false;
-  		    movement = moveSquares(c);
-          if(movement){
-    		    addSquares(c);
-    		    moveSquares(c);
-    		    addRandomSquare();
-            print();
-          }
-        }
-      }
 
-      // c = 0;
-      // usleep(4000000);
-    // }
+				movement = false;
+				movement = moveSquares(c);
+				if (movement){
+					addSquares(c);
+					moveSquares(c);
+					addRandomSquare();
+					print();
+				}
+			}
+		}
+
+		// c = 0;
+		// usleep(4000000);
+		// }
 	}
 
 }
@@ -91,7 +91,7 @@ void game::play(){ // Plays The Game
 
 bool game::moveSquares(char dir){ // Function to Compress All Current Squares to a Single Side
 
-  bool movement = false;
+	bool movement = false;
 
 	switch (dir){
 
@@ -115,8 +115,8 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 			while (count < 4){
 				board[count++][xCoord] = 0;
-        movement = true;
-      }
+				movement = true;
+			}
 
 		}
 
@@ -147,8 +147,8 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 			while (count >= 0){
 				board[count--][xCoord] = 0;
-        movement = true;
-      }
+				movement = true;
+			}
 		}
 
 		break;
@@ -164,7 +164,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 				if (board[yCoord][xCoord] != 0){
 					board[yCoord][count++] = board[yCoord][xCoord];
- 
+
 				}
 			}
 
@@ -174,8 +174,8 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 			while (count < 4){
 				board[yCoord][count++] = 0;
-        movement = true;
-      }
+				movement = true;
+			}
 
 		}
 
@@ -194,7 +194,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 				}
 				else{
 					board[yCoord][count--] = board[yCoord][xCoord];
- 
+
 				}
 
 			}
@@ -206,12 +206,12 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 			while (count >= 0){
 				board[yCoord][count--] = 0;
-        movement = true;
-      }
+				movement = true;
+			}
 		}
 		break;
 	}
-  return movement;
+	return movement;
 }
 
 void game::addSquares(char dir){
@@ -283,7 +283,7 @@ void game::addSquares(char dir){
 }
 
 void game::addRandomSquare(){
- // TODO: Fix this
+	// TODO: Fix this
 	srand(time(NULL));
 
 	while (true){
@@ -291,16 +291,16 @@ void game::addRandomSquare(){
 		// Randomize a Location
 		int xCoord = rand() % 3;
 		int yCoord = rand() % 3;
-    bool found = false;
+		bool found = false;
 		if (board[yCoord][xCoord] == 0){
 			board[yCoord][xCoord] = 2;
-      found = true;
+			found = true;
 			break;
 		}
-    if(not found){
-      cout << "END OF GAME" << endl;
-      break;
-    }
+		if (not found){
+			cout << "END OF GAME" << endl;
+			break;
+		}
 	}
 }
 
@@ -309,16 +309,16 @@ void game::print(){
 	/** COMMAND LINE GRAPHICS (USED FOR TESTING)
 			cout << "_________________\n";
 			for (int i = 0; i < 4; i++){
-				cout << "| ";
-				for (int j = 0; j < 4; j++){
-					cout << board[i][j] << " ";
-				}
-				cout << "|\n";
+			cout << "| ";
+			for (int j = 0; j < 4; j++){
+			cout << board[i][j] << " ";
+			}
+			cout << "|\n";
 			}
 			cout << "_________________\n";
 			cout << "Max score: " << maxScore << endl;
 
-	**/
+			**/
 
 	// COLORS FOR ALL 2048 TILES
 	// Background: rgb(187,173,160)
@@ -345,20 +345,20 @@ void game::print(){
 	XPoint initialPos;
 	initialPos.x = 25;
 	initialPos.y = 25;
-  char theFont[] = "12x24romankana";
-  char two[] = "2";
-  char four[] = "4";
-  char eight[] = "8";
-  char sixteen[] = "16";
-  char thritytwo[] = "32";
-  char sixtyfour[] = "64";
-  char onetwentyeight[] = "128";
-  char twofiftysix[] = "256";
-  char fivehundo[] = "512";
-  char thousand[] = "1024";
-  char twofoureight[] = "2048";
-  // char myText[]
-  gfx_changefont(theFont);
+	char theFont[] = "12x24romankana";
+	char two[] = "2";
+	char four[] = "4";
+	char eight[] = "8";
+	char sixteen[] = "16";
+	char thritytwo[] = "32";
+	char sixtyfour[] = "64";
+	char onetwentyeight[] = "128";
+	char twofiftysix[] = "256";
+	char fivehundo[] = "512";
+	char thousand[] = "1024";
+	char twofoureight[] = "2048";
+	// char myText[]
+	gfx_changefont(theFont);
 
 	// Draw All Tiles of board On Graphics Window
 	for (int i = 0; i < 4; i++){ // xCoord Index
@@ -371,89 +371,88 @@ void game::print(){
 				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, "0");
 			}
 			else if (board[j][i] == 2){
-        char myText[] = "2";
+				char myText[] = "2";
 				gfx_color(238, 228, 218);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, two);
 			}
 			else if (board[j][i] == 4){
-        char myText[] = "4";
+				char myText[] = "4";
 				gfx_color(237, 224, 200);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, four);
 			}
 			else if (board[j][i] == 8){
-        char myText[] = "8";
+				char myText[] = "8";
 				gfx_color(242, 177, 121);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, eight);
 			}
 			else if (board[j][i] == 16){
-        char myText[] = "16";
+				char myText[] = "16";
 				gfx_color(245, 149, 99);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, sixteen);
 			}
 			else if (board[j][i] == 32){
-        char myText[] = "32";
+				char myText[] = "32";
 				gfx_color(246, 124, 95);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, thritytwo);
 			}
 			else if (board[j][i] == 64){
-        char myText[] = "64";
+				char myText[] = "64";
 				gfx_color(246, 94, 59);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, sixtyfour);
 			}
 			else if (board[j][i] == 128){
-        char myText[] = "128";
+				char myText[] = "128";
 				gfx_color(237, 207, 114);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, onetwentyeight);
 			}
 			else if (board[j][i] == 256){
-        char myText[] = "256";
+				char myText[] = "256";
 				gfx_color(237, 204, 97);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, twofiftysix);
 			}
 			else if (board[j][i] == 512){
-        char myText[] = "512";
+				char myText[] = "512";
 				gfx_color(237, 200, 80);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, fivehundo);
 			}
 			else if (board[j][i] == 1024){
-        char myText[] = "1024";
+				char myText[] = "1024";
 				gfx_color(237, 197, 63);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, thousand);
 			}
 			else if (board[j][i] == 2048){
-        char myText[] = "2048";
+				char myText[] = "2048";
 				gfx_color(237, 194, 46);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-        gfx_color(0,0,0);
+				gfx_color(0, 0, 0);
 				gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, twofoureight);
 			}
 			else{
-        // string x  = "NaN";
+				// string x  = "NaN";
 				gfx_color(60, 58, 50);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
 				// gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, x);
 			}
-      // gfx_text(initialPos.x + (i * 175) + 75, initialPos.y + (j * 175) + 75, myText);
 		}
 	}
 
