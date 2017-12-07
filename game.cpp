@@ -50,41 +50,48 @@ void game::play(){ // Plays The Game
 	int width =725;	// Width
 	int height = 725;	// Height
 	char c;				// Keyboard Input
+  int event;
 
 	// Open a New Window for Drawing
 	gfx_open(width, height, "2048.cpp");
   print();
-	while (true){
+  event = gfx_event_waiting();
+  c = gfx_wait();
+  //gfx_flush();
+  bool movement = false;
+	while (c!=27){
 		// Play game
-    // cout << gfx_event_waiting() << endl;
-    // if(gfx_event_waiting() == 1){
-      // gfx_flush();
-  		c = gfx_wait();
-      // cout << c << endl;
-      if(c==27){
-        break;
+    event = gfx_event_waiting();
+      if(event){
+  		  c = gfx_wait();
+        if(event == 2){ 
+    	    if ((c != 'w') and (c != 'a') and (c != 's') and (c != 'd') and (c != 27)){
+          continue;
+  	      }
+
+  		
+          movement = false;
+  		    movement = moveSquares(c);
+          if(movement){
+    		    addSquares(c);
+    		    moveSquares(c);
+    		    addRandomSquare();
+            print();
+          }
+        }
       }
-  	  if ((c != 'w') and (c != 'a') and (c != 's') and (c != 'd') and (c != 27)){
-        continue;
-  	  }
 
-  		// Update the Board
-
-  		moveSquares(c);
-  		addSquares(c);
-  		moveSquares(c);
-  		addRandomSquare();
-      print();
-      // gfx_flush();
-      c = 0;
+      // c = 0;
       // usleep(4000000);
-
+    // }
 	}
 
 }
 
 
-void game::moveSquares(char dir){ // Function to Compress All Current Squares to a Single Side
+bool game::moveSquares(char dir){ // Function to Compress All Current Squares to a Single Side
+
+  bool movement = false;
 
 	switch (dir){
 
@@ -98,6 +105,7 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 				if (board[yCoord][xCoord] != 0){
 					board[count++][xCoord] = board[yCoord][xCoord];
+
 				}
 			}
 
@@ -105,8 +113,11 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			// front and  'count' is set as index of first 0.
 			// Make all elements 0 from count to end.
 
-			while (count < 4)
+			while (count < 4){
 				board[count++][xCoord] = 0;
+        movement = true;
+      }
+
 		}
 
 		break;
@@ -125,6 +136,7 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 				}
 				else{
 					board[count--][xCoord] = board[yCoord][xCoord];
+
 				}
 			}
 
@@ -133,8 +145,10 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			// Make all elements 0 from count to end.
 
 
-			while (count >= 0)
+			while (count >= 0){
 				board[count--][xCoord] = 0;
+        movement = true;
+      }
 		}
 
 		break;
@@ -150,6 +164,7 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 				if (board[yCoord][xCoord] != 0){
 					board[yCoord][count++] = board[yCoord][xCoord];
+ 
 				}
 			}
 
@@ -157,8 +172,11 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			// front and  'count' is set as index of first 0.
 			// Make all elements 0 from count to end.
 
-			while (count < 4)
+			while (count < 4){
 				board[yCoord][count++] = 0;
+        movement = true;
+      }
+
 		}
 
 		break;
@@ -176,6 +194,7 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 				}
 				else{
 					board[yCoord][count--] = board[yCoord][xCoord];
+ 
 				}
 
 			}
@@ -185,11 +204,14 @@ void game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			// Make all elements 0 from count to end.
 
 
-			while (count >= 0)
+			while (count >= 0){
 				board[yCoord][count--] = 0;
+        movement = true;
+      }
 		}
 		break;
 	}
+  return movement;
 }
 
 void game::addSquares(char dir){
@@ -261,7 +283,7 @@ void game::addSquares(char dir){
 }
 
 void game::addRandomSquare(){
-
+ // TODO: Fix this
 	srand(time(NULL));
 
 	while (true){
@@ -269,11 +291,16 @@ void game::addRandomSquare(){
 		// Randomize a Location
 		int xCoord = rand() % 3;
 		int yCoord = rand() % 3;
-
+    bool found = false;
 		if (board[yCoord][xCoord] == 0){
 			board[yCoord][xCoord] = 2;
+      found = true;
 			break;
 		}
+    if(not found){
+      cout << "END OF GAME" << endl;
+      break;
+    }
 	}
 }
 

@@ -27,11 +27,11 @@ class game{
     // Plays game
     void play();
 
-    // Add Adjacent Squares That Can Be Added 
+    // Add Adjacent Squares That Can Be Added
     void addSquares(char);
 
 	// Moves all Squares a Certain Direction
-	void moveSquares(char);
+	bool moveSquares(char);
 
 	// Place a '2' on the Board in a Random Empty Location
 	void addRandomSquare();
@@ -43,5 +43,5 @@ class game{
     // Stores the values of the squares at each position
     int board[4][4];
     int maxScore;
-   
+
 };
