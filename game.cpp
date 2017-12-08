@@ -8,6 +8,8 @@
 
 #include "game.h"
 #include "gfxnew.h"
+#include <algorithm>
+#include <vector>
 
 void drawSquare(int xCoord, int yCoord){
 	// Draws a square on the board
@@ -173,7 +175,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 		}
 
 		return false;
-		
+
 		break;
 
 
@@ -204,7 +206,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			}
 		}
 
-		
+
 		// Check If New Arrays are Same as Old Arrays
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
@@ -245,7 +247,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 
 		}
 
-		
+
 		// Check If New Arrays are Same as Old Arrays
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
@@ -289,7 +291,7 @@ bool game::moveSquares(char dir){ // Function to Compress All Current Squares to
 			}
 		}
 
-		
+
 		// Check If New Arrays are Same as Old Arrays
 		for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
 
@@ -434,20 +436,23 @@ bool game::addSquares(char dir){
 }
 
 void game::addRandomSquare(){
-	// TODO: Fix this
+
+  vector<int> openx;
+  vector<int> openy;
+
+  for(int i = 0; i < 4; i ++){
+    for(int j = 0; j < 4; j ++){
+      if(board[i][j] == 0){
+        openx.push_back(i);
+        openy.push_back(j);
+      }
+    }
+  }
+
 	srand(time(NULL));
-
-	while (true){
-
-		// Randomize a Location
-		int xCoord = rand() % 3;
-		int yCoord = rand() % 3;
-
-		if (board[yCoord][xCoord] == 0){
-			board[yCoord][xCoord] = 2;
-			break;
-		}
-	}
+	// Randomize a Location
+	int index = rand() % openx.size();
+  board[openx[index]][openy[index]] = 2;
 }
 
 void game::print(){
@@ -621,7 +626,7 @@ void game::endGameWindow(){
 			}
 		}
 	}
-	
+
 	maxScore = temp;
 
 	gfx_open(300, 200, "You Lost!");
