@@ -42,23 +42,22 @@ void copyBoard(int board1[4][4], int board2[4][4]){
 }
 
 // Function to Return if Board is Full
-bool endGame(int temp[4][4]){
+bool endGame(game * g){
 
-	for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
+  // Uses a copied version of the current board to safely check for all possible
+  // movement or addition
+  if(g->moveSquares('Q') or g->moveSquares('S') or g->moveSquares('T') or g->moveSquares('R'))
+    return false;
 
-		for (int yCoord = 0; yCoord < 4; yCoord++){ // Go Through Every Row and Push Things Up
+  if(g->addSquares('Q') or g->addSquares('S') or g->addSquares('T') or g->addSquares('R'))
+    return false;
 
-			if (temp[yCoord][xCoord] == 0){
-
-				return false;
-
-			}
-		}
-	}
+  cout << "derp"<< endl;
 
 	return true;
 
 }
+
 game::game(){
 
 	// Fills the board with 0's, which are the default value
@@ -77,6 +76,15 @@ game::game(){
 
 game::~game(){} // Destructor
 
+void game::setGame(int temp[4][4]){
+  // Copies values from temp into the game's board
+  for(int i = 0; i < 4; i ++){
+    for(int j = 0; j < 4; j ++){
+      board[i][j] = temp[i][j];
+    }
+  }
+}
+
 void game::play(){ // Plays The Game
 
 	// Set Basic Variables
@@ -91,7 +99,6 @@ void game::play(){ // Plays The Game
 
 	bool movement = false;
 	bool add = false;
-
 	while (c != 27){
 
 		gfx_color(0, 0, 0);
@@ -113,20 +120,24 @@ void game::play(){ // Plays The Game
 
 				if (movement || add){
 					addRandomSquare();
-				}
+        }
 
 				print();
-
 			}
+
+      // It was easiest to make a new instance of the class game, since
+      // the functions for checking for movement and addition are member functions
+      game g;
+      // Copies the contents of the current board to the board of a temporary game
+      g.setGame(board);
+
+      if (endGame(&g)){
+        endGameWindow();
+        cout << "End Game!" << endl;
+        break;
+      }
+
 		}
-
-		// If Board is Full --> Display End Game Screen
-		if (endGame(board)){
-
-			endGameWindow();
-			break;
-		}
-
 	}
 }
 

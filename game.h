@@ -17,12 +17,17 @@ using namespace std;
 
 // Draws an individual square on the screen
 void draw_square(int, int, int, int, int);
+// Copies the board
+void copyBoard(int[4][4], int[4][4]);
 
 class game{
 
   public:
     game();
     ~game();
+
+    // Sets the game based on an input board, used for end-of-game checking
+    void setGame(int[4][4]);
 
     // Plays game
     void play();
@@ -40,6 +45,7 @@ class game{
     void print();
 
 	// Check for End Game [TO DO]
+
 	void endGameWindow();
 
   private:
@@ -48,3 +54,7 @@ class game{
     int maxScore;
 
 };
+
+// Checks to see if the game is over. Uses a copy of the game to check so that we
+// do not modify the actual game being played 
+bool endGame(game *);
