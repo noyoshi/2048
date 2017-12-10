@@ -98,7 +98,7 @@ void game::play(){ // Plays The Game
 		gfx_text(10, 735, "Use the Arrow Keys to Play! ESC to Leave Game!");
 
 		// Play game
-		event = gfx_new_restrctive();
+		event = gfx_event_waiting();
 
 		if (event){
 			c = gfx_wait();
