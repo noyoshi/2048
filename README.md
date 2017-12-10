@@ -14,7 +14,8 @@ TODO / BUGS
 for end of game cases (the odd of choosing a valid location randomly is very small)
 - [x] BUG: If no movement occurs, a random block is still generated
 - [x] TODO: Make it only play once per key press
-- [ ] TODO: Add max score feature
+- [x] TODO: Add max score feature
+- [ ] BUG: Allow game to continue if player can add squares, even if board is full
 
 USAGE
 ---
