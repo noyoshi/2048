@@ -56,5 +56,5 @@ class game{
 };
 
 // Checks to see if the game is over. Uses a copy of the game to check so that we
-// do not modify the actual game being played 
+// do not modify the actual game being played
 bool endGame(game *);

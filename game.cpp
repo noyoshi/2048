@@ -10,6 +10,8 @@
 #include "gfxnew.h"
 #include <algorithm>
 #include <vector>
+#include <cstdlib>
+#include <stdlib.h>
 
 void drawSquare(int xCoord, int yCoord){
 	// Draws a square on the board
@@ -49,8 +51,8 @@ bool endGame(game * g){
   if(g->moveSquares('Q') or g->moveSquares('S') or g->moveSquares('T') or g->moveSquares('R'))
     return false;
 
-  if(g->addSquares('Q') or g->addSquares('S') or g->addSquares('T') or g->addSquares('R'))
-    return false;
+  // if(g->addSquares('Q') or g->addSquares('S') or g->addSquares('T') or g->addSquares('R'))
+  //   return false;
 
   cout << "derp"<< endl;
 
@@ -133,11 +135,13 @@ void game::play(){ // Plays The Game
 
       if (endGame(&g)){
         endGameWindow();
+        // gfx_text(10, 785, "Game over!");
         cout << "End Game!" << endl;
+        // usleep(10000000);
         break;
       }
-
 		}
+
 	}
 }
 
@@ -626,6 +630,11 @@ void game::print(){
 void game::endGameWindow(){
 
 	int temp = 0;
+  char theFont[] = "12x24romankana";
+  char c;
+  int event;
+  int sz = 0;
+
 
 	// Check for Highest Value Tile
 	for (int xCoord = 0; xCoord < 4; xCoord++){ // Go Through Each Column
@@ -641,10 +650,36 @@ void game::endGameWindow(){
 	maxScore = temp;
 
 	gfx_open(300, 200, "You Lost!");
-	gfx_text(125, 85, "GAME OVER!!");
+  gfx_changefont(theFont);
+  gfx_color(255, 0, 255);
+  gfx_clear();
+	gfx_text(80, 55, "GAME OVER!!");
 
-	// Convert Max Score to String
-	char phrase[] = "Max Score: ";
+	char alert[] = "Max Score";
+	gfx_text(80, 105, alert);
 
-	gfx_text(125, 95, phrase);
+  // Gets the size of the score
+  while(temp != 0){
+    temp /= 10;
+    sz ++;
+  }
+
+  char score[sz];
+
+  // Converts the int into a c-string
+  sprintf(score, "%d", maxScore);
+  gfx_text(120, 130, score);
+
+  // Loops until player presses esc key
+  while(c!=27){
+
+    event = gfx_event_waiting();
+
+    if (event){
+      c = gfx_wait();
+
+      if(c == 27) break;
+
+    }
+  }
 }
