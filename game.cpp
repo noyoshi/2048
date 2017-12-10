@@ -2,9 +2,8 @@
 // Class game implementation
 
 // Noah Yoshida + Allen Duong
-// Last updated: Dec 3 2017:
-//		- Removed GoTo's
-//		- Added Animation
+// Last updated: Dec 10 2017:
+//		- Updated end of game window
 
 #include "game.h"
 #include "gfxnew.h"
