@@ -50,8 +50,15 @@ bool endGame(game * g){
   if(g->moveSquares('Q') or g->moveSquares('S') or g->moveSquares('T') or g->moveSquares('R'))
     return false;
 
-  // if(g->addSquares('Q') or g->addSquares('S') or g->addSquares('T') or g->addSquares('R'))
-  //   return false;
+  // Try to add in all directions
+  g->addSquares('Q');
+  g->addSquares('S');
+  g->addSquares('T');
+  g->addSquares('R');
+
+  // If something was able to be added, then we should be able to move
+  if(g->moveSquares('Q') or g->moveSquares('S') or g->moveSquares('T') or g->moveSquares('R'))
+    return false;
 
   cout << "derp"<< endl;
 
