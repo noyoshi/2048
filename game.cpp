@@ -616,7 +616,7 @@ void game::print(){
 				// string x  = "NaN";
 				gfx_color(60, 58, 50);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-				// gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + 75, x);
+			// gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + 75, x);
 			}
 		}
 	}
