@@ -45,22 +45,22 @@ void copyBoard(int board1[4][4], int board2[4][4]){
 // Function to Return if Board is Full
 bool endGame(game * g){
 
-  // Uses a copied version of the current board to safely check for all possible
-  // movement or addition
-  if(g->moveSquares('Q') or g->moveSquares('S') or g->moveSquares('T') or g->moveSquares('R'))
-    return false;
+	// Uses a copied version of the current board to safely check for all possible
+	// movement or addition
+	if (g->moveSquares('Q') or g->moveSquares('S') or g->moveSquares('T') or g->moveSquares('R'))
+		return false;
 
-  // Try to add in all directions
-  g->addSquares('Q');
-  g->addSquares('S');
-  g->addSquares('T');
-  g->addSquares('R');
+	// Try to add in all directions
+	g->addSquares('Q');
+	g->addSquares('S');
+	g->addSquares('T');
+	g->addSquares('R');
 
-  // If something was able to be added, then we should be able to move
-  if(g->moveSquares('Q') or g->moveSquares('S') or g->moveSquares('T') or g->moveSquares('R'))
-    return false;
+	// If something was able to be added, then we should be able to move
+	if (g->moveSquares('Q') or g->moveSquares('S') or g->moveSquares('T') or g->moveSquares('R'))
+		return false;
 
-  cout << "derp"<< endl;
+	cout << "derp" << endl;
 
 	return true;
 
@@ -85,12 +85,12 @@ game::game(){
 game::~game(){} // Destructor
 
 void game::setGame(int temp[4][4]){
-  // Copies values from temp into the game's board
-  for(int i = 0; i < 4; i ++){
-    for(int j = 0; j < 4; j ++){
-      board[i][j] = temp[i][j];
-    }
-  }
+	// Copies values from temp into the game's board
+	for (int i = 0; i < 4; i++){
+		for (int j = 0; j < 4; j++){
+			board[i][j] = temp[i][j];
+		}
+	}
 }
 
 void game::play(){ // Plays The Game
@@ -128,24 +128,24 @@ void game::play(){ // Plays The Game
 
 				if (movement || add){
 					addRandomSquare();
-        }
+				}
 
 				print();
 			}
 
-      // It was easiest to make a new instance of the class game, since
-      // the functions for checking for movement and addition are member functions
-      game g;
-      // Copies the contents of the current board to the board of a temporary game
-      g.setGame(board);
+			// It was easiest to make a new instance of the class game, since
+			// the functions for checking for movement and addition are member functions
+			game g;
+			// Copies the contents of the current board to the board of a temporary game
+			g.setGame(board);
 
-      if (endGame(&g)){
-        endGameWindow();
-        // gfx_text(10, 785, "Game over!");
-        cout << "End Game!" << endl;
-        // usleep(10000000);
-        break;
-      }
+			if (endGame(&g)){
+				endGameWindow();
+				// gfx_text(10, 785, "Game over!");
+				cout << "End Game!" << endl;
+				// usleep(10000000);
+				break;
+			}
 		}
 
 	}
@@ -458,22 +458,22 @@ bool game::addSquares(char dir){
 
 void game::addRandomSquare(){
 
-  vector<int> openx;
-  vector<int> openy;
+	vector<int> openx;
+	vector<int> openy;
 
-  for(int i = 0; i < 4; i ++){
-    for(int j = 0; j < 4; j ++){
-      if(board[i][j] == 0){
-        openx.push_back(i);
-        openy.push_back(j);
-      }
-    }
-  }
+	for (int i = 0; i < 4; i++){
+		for (int j = 0; j < 4; j++){
+			if (board[i][j] == 0){
+				openx.push_back(i);
+				openy.push_back(j);
+			}
+		}
+	}
 
 	srand(time(NULL));
 	// Randomize a Location
 	int index = rand() % openx.size();
-  board[openx[index]][openy[index]] = 2;
+	board[openx[index]][openy[index]] = 2;
 }
 
 void game::print(){
@@ -626,7 +626,7 @@ void game::print(){
 				// string x  = "NaN";
 				gfx_color(60, 58, 50);
 				drawSquare(initialPos.x + (i * 175), initialPos.y + (j * 175));
-			// gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + 75, x);
+				// gfx_text(initialPos.x + (i * 175) + textOffsetX, initialPos.y + (j * 175) + 75, x);
 			}
 		}
 	}
@@ -636,10 +636,10 @@ void game::print(){
 void game::endGameWindow(){
 
 	int temp = 0;
-  char theFont[] = "12x24romankana";
-  char c;
-  int event;
-  int sz = 0;
+	char theFont[] = "12x24romankana";
+	char c;
+	int event;
+	int sz = 0;
 
 
 	// Check for Highest Value Tile
@@ -656,36 +656,36 @@ void game::endGameWindow(){
 	maxScore = temp;
 
 	gfx_open(300, 200, "You Lost!");
-  gfx_changefont(theFont);
-  gfx_color(255, 0, 255);
-  gfx_clear();
+	gfx_changefont(theFont);
+	gfx_color(255, 0, 255);
+	gfx_clear();
 	gfx_text(80, 55, "GAME OVER!!");
 
 	char alert[] = "Max Score";
 	gfx_text(80, 105, alert);
 
-  // Gets the size of the score
-  while(temp != 0){
-    temp /= 10;
-    sz ++;
-  }
+	// Gets the size of the score
+	while (temp != 0){
+		temp /= 10;
+		sz++;
+	}
 
-  char score[sz];
+	char score[sz];
 
-  // Converts the int into a c-string
-  sprintf(score, "%d", maxScore);
-  gfx_text(120, 130, score);
+	// Converts the int into a c-string
+	sprintf(score, "%d", maxScore);
+	gfx_text(120, 130, score);
 
-  // Loops until player presses esc key
-  while(c!=27){
+	// Loops until player presses esc key
+	while (c != 27){
 
-    event = gfx_event_waiting();
+		event = gfx_event_waiting();
 
-    if (event){
-      c = gfx_wait();
+		if (event){
+			c = gfx_wait();
 
-      if(c == 27) break;
+			if (c == 27) break;
 
-    }
-  }
+		}
+	}
 }
