@@ -60,11 +60,11 @@ bool endGame(game * g){
   if(g->moveSquares('Q') or g->moveSquares('S') or g->moveSquares('T') or g->moveSquares('R'))
     return false;
 
-  cout << "derp"<< endl;
-
 	return true;
 
 }
+
+// ----------- Game Class Implementation ------------
 
 game::game(){
 
@@ -490,23 +490,22 @@ void game::print(){
 			cout << "_________________\n";
 			cout << "Max score: " << maxScore << endl;
 
-			**/
-
-	// COLORS FOR ALL 2048 TILES
-	// Background: rgb(187,173,160)
-	// Empty Square: rgb(205,192,180)
-	// 2 Square: rgb(238,228,218)
-	// 4 Square: rgb(237,224,200)
-	// 8 Square: rgb(242,177,121)
-	// 16 Square: rgb(245,149,99)
-	// 32 Square: rgb(246,124,95)
-	// 64 Square: rgb(246,94,59)
-	// 128 Square: rgb(237,207,114)
-	// 256 Square: rgb(237,204,97)
-	// 512 Square: rgb(237,200,80)
-	// 1024 Square: rgb(237,197,63)
-	// 2048 Square: rgb(237,194,46)
-	// 4096++ Square: rgb(60,58,50)
+	COLORS FOR ALL 2048 TILES
+	Background: rgb(187,173,160)
+	Empty Square: rgb(205,192,180)
+	2 Square: rgb(238,228,218)
+	4 Square: rgb(237,224,200)
+	8 Square: rgb(242,177,121)
+	16 Square: rgb(245,149,99)
+	32 Square: rgb(246,124,95)
+	64 Square: rgb(246,94,59)
+	128 Square: rgb(237,207,114)
+	256 Square: rgb(237,204,97)
+	512 Square: rgb(237,200,80)
+	1024 Square: rgb(237,197,63)
+	2048 Square: rgb(237,194,46)
+	4096++ Square: rgb(60,58,50)
+  **/
 
 	// Clear Screen
 	gfx_clear_color(187, 173, 160);
@@ -657,7 +656,8 @@ void game::endGameWindow(){
 
 	gfx_open(300, 200, "You Lost!");
   gfx_changefont(theFont);
-  gfx_color(255, 0, 255);
+  gfx_color(0, 0, 0);
+  gfx_clear_color(187, 173, 160);
   gfx_clear();
 	gfx_text(80, 55, "GAME OVER!!");
 

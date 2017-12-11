@@ -35,18 +35,16 @@ class game{
     // Add Adjacent Squares That Can Be Added
     bool addSquares(char);
 
-	// Moves all Squares a Certain Direction
-	bool moveSquares(char);
+  	// Moves all Squares a Certain Direction
+  	bool moveSquares(char);
 
-	// Place a '2' on the Board in a Random Empty Location
-	void addRandomSquare();
+  	// Place a '2' on the Board in a Random Empty Location
+  	void addRandomSquare();
 
     // Prints board
     void print();
 
-	// Check for End Game [TO DO]
-
-	void endGameWindow();
+  	void endGameWindow();
 
   private:
     // Stores the values of the squares at each position
